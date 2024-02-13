@@ -66,17 +66,17 @@ class Clock{
     calc(){
         if(!this.#_c_enable || this.#_c_url === "") return;
         /** 防多线程竞争，先缓存变量，运算后再赋值 */
-        var url = this.#_c_url;
-        var factor = this.#_c_factor;
-        var parser = this.#_c_parser;
-        var delay = this.#_delay;
-        var response = "";
-        var failed = this.#_failed;
+        let url = this.#_c_url;
+        let factor = this.#_c_factor;
+        let parser = this.#_c_parser;
+        let delay = this.#_delay;
+        let response = "";
+        let failed = this.#_failed;
         try{
-            var st = (new Date()).getTime();
-            var ret = http.get(url);
-            var et = (new Date()).getTime();
-            var body = ret.body.string();
+            let st = (new Date()).getTime();
+            let ret = http.get(url);
+            let et = (new Date()).getTime();
+            let body = ret.body.string();
             response = JSON.stringify(ret) + "\n\n" + body;
             if(ret.statusCode != 200){
                 this.#_response = response;
@@ -84,8 +84,8 @@ class Clock{
                 this.#_failed = failed;
                 return;
             }
-            var lt = st + (et - st) / 2;
-            var rt;
+            let lt = st + (et - st) / 2;
+            let rt;
             try{
                 rt = parseInt(parser(body));
             } catch(err){
@@ -173,16 +173,16 @@ class Server{
     calc(){
         if(!this.#_c_enable || this.#_c_url === "") return;
         /** 防多线程竞争，先缓存变量，运算后再赋值 */
-        var url = this.#_c_url;
-        var factor = this.#_c_factor;
-        var delay = this.#_delay;
-        var response = "";
-        var failed = this.#_failed;
+        let url = this.#_c_url;
+        let factor = this.#_c_factor;
+        let delay = this.#_delay;
+        let response = "";
+        let failed = this.#_failed;
         try{
-            var st = (new Date()).getTime();
-            var ret = http.get(url);
-            var et = (new Date()).getTime();
-            var body = ret.body.string();
+            let st = (new Date()).getTime();
+            let ret = http.get(url);
+            let et = (new Date()).getTime();
+            let body = ret.body.string();
             response = JSON.stringify(ret) + "\n\n" + body;
             if(ret.statusCode != 200){
                 this.#_response = response;
@@ -239,11 +239,11 @@ class Delay{
     /** 自动调用_clock与_server子模块的calc方法 */
     calc(){
         if(!this.#_c_enable) return;
-        var all = null;
+        let all = null;
         try{
-            var delay = 0;
-            var all = null;
-            var time = null;
+            let delay = 0;
+            let all = null;
+            let time = null;
             if(this._clock.getEnable()){
                 this._clock.calc();
                 delay = this._clock.getDelay();
@@ -274,7 +274,7 @@ class Delay{
     }
 }
 
-var _manager = {
+let _manager = {
     create : function(){
         return new Delay();
     }

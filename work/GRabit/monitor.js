@@ -26,7 +26,7 @@ class Monitor{
     /** 【线程安全】开始监视线程 */
     addThread(thread, name){
         this.#_t_lock.lock();
-        for(var idx = 0; idx < this.#_t.length; ++idx){
+        for(let idx = 0; idx < this.#_t.length; ++idx){
             if(this.#_t[idx] == thread){
                 this.#_t_lock.unlock();
                 return;
@@ -41,7 +41,7 @@ class Monitor{
     /** 【线程安全】停止监控线程 */
     removeThread(thread){
         this.#_t_lock.lock();
-        for(var idx = 0; idx < this.#_t.length; ++idx){
+        for(let idx = 0; idx < this.#_t.length; ++idx){
             if(this.#_t[idx] != thread) continue;
             this.#_t[idx] = this.#_t[this.#_t.length-1];
             this.#_t_name[idx] = this.#_t_name[this.#_t.length-1];
@@ -61,9 +61,9 @@ class Monitor{
         if(this.#_m != null) return;
         this.#_m = threads.start(() => {
             while(!this.#_m_shut){
-                var time = new Date();
+                let time = new Date();
                 this.#_t_lock.lock();
-                for(var idx = 0; idx < this.#_t.length; ++idx){
+                for(let idx = 0; idx < this.#_t.length; ++idx){
                     if(this.#_t[idx].isAlive()){
                         this.#_t_state[idx] = 1;
                         this.#_t_time[idx] = time;
@@ -85,7 +85,7 @@ class Monitor{
     }
 }
 
-var _manager = {
+let _manager = {
     create: function(){
         return new Monitor();
     }
